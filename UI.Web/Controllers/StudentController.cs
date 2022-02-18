@@ -37,6 +37,7 @@ namespace UI.Web.Controllers
                 studentModel.Gender = reader.GetString("Gender");
                 studentList.Add(studentModel);
             }
+
             // Call Close when done reading.
             reader.Close();
 
