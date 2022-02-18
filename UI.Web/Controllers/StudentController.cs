@@ -29,7 +29,7 @@ namespace UI.Web.Controllers
             // Call Read before accessing data.
             while (reader.Read())
             {
-                var studentModel=new StudentModel();
+                var studentModel = new StudentModel();
                 studentModel.StudentId = reader.GetInt32("StudentId");
                 studentModel.RollNumber = reader.GetInt32("RollNum");
                 studentModel.FirstName = reader.GetString("Name");
