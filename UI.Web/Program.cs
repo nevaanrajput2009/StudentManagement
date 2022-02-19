@@ -1,8 +1,10 @@
+using UI.Web.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+ConfigureServices(builder.Services);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -13,6 +15,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -26,6 +29,16 @@ app.MapControllerRoute(
 
 app.Run();
 
+
+void ConfigureServices(IServiceCollection services)
+{
+    //Added for session state
+    services.AddDistributedMemoryCache();
+    services.AddSession(options =>
+    {
+        options.IdleTimeout = TimeSpan.FromMinutes(10);
+    });
+}
 
 ////static IHostBuilder CreateHostBuilder(string[] args)
 ////{
