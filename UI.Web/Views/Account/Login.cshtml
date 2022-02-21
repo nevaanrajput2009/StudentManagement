@@ -19,7 +19,7 @@
 
                 <form asp-action="Login">
                   <p>Please login to your account</p>
-
+                  <partial name="_Alerts"></partial>
                   <div class="form-outline mb-4">
                     <input asp-for="UserName" id="form2Example11" class="form-control" placeholder="Enter user name"/>
                    <span asp-validation-for="UserName"></span>
