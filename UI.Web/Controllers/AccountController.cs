@@ -58,5 +58,12 @@ namespace UI.Web.Controllers
             HttpContext.Session.SetObjectAsJson("CurrentUser", user);
             return RedirectToAction("Index", "Home");
         }
+
+        [UserAuthorizationActionFilter]
+        public IActionResult Privacy()
+        {
+
+            return View();
+        }
     }
 }
