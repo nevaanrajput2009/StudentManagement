@@ -6,7 +6,7 @@ using UI.Web.Models;
 
 namespace UI.Web.Controllers
 {
-    [CustomActionFilter]
+    [UserAuthorizationActionFilter]
     public class StudentController : Controller
     {
         private readonly IConfiguration Configuration;
@@ -17,14 +17,6 @@ namespace UI.Web.Controllers
 
         public IActionResult List()
         {
-            var user = HttpContext.Session.GetObjectFromJson<UserModel>("CurrentUser");
-            if (user == null)
-            {
-                TempData["ErrorAlertMessage"] = "Invalid user name or password";
-                return RedirectToAction("Login", "Account");
-            }
-
-
             var studentList = new List<StudentModel>();
 
             string connString = Configuration.GetConnectionString("Myconnection");
@@ -57,14 +49,6 @@ namespace UI.Web.Controllers
 
         public IActionResult Create()
         {
-            var user = HttpContext.Session.GetObjectFromJson<UserModel>("CurrentUser");
-            if (user == null)
-            {
-                TempData["ErrorAlertMessage"] = "Invalid user name or password";
-                return RedirectToAction("Login", "Account");
-            }
-
-
             var model = new StudentModel();
             return View(model);
         }
@@ -72,14 +56,6 @@ namespace UI.Web.Controllers
         [HttpPost]
         public IActionResult Create(StudentModel model)
         {
-            var user = HttpContext.Session.GetObjectFromJson<UserModel>("CurrentUser");
-            if (user == null)
-            {
-                TempData["ErrorAlertMessage"] = "Invalid user name or password";
-                return RedirectToAction("Login", "Account");
-            }
-
-
             try
             {
                 string connString = Configuration.GetConnectionString("Myconnection");
