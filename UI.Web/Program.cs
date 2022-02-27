@@ -1,12 +1,10 @@
-using UI.Web.Helpers;
+using BusinessManager;
+using BusinessManager.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
 ConfigureServices(builder.Services);
-var app = builder.Build();
 
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -18,31 +16,18 @@ if (!app.Environment.IsDevelopment())
 app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");
-
 app.Run();
 
 
-void ConfigureServices(IServiceCollection services)
+static void ConfigureServices(IServiceCollection services)
 {
-    //Added for session state
+    services.AddControllersWithViews();
     services.AddDistributedMemoryCache();
-    services.AddSession(options =>
-    {
-        options.IdleTimeout = TimeSpan.FromMinutes(10);
-    });
+    services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(10));
+    services.AddSingleton<IUserService, UserService>();
 }
-
-////static IHostBuilder CreateHostBuilder(string[] args)
-////{
-////  return  Host.CreateDefaultBuilder(args)
-////.ConfigureServices((_, services) =>
-////services.AddScoped<IMessageWriter, LoggingMessageWriter>());
-////}
