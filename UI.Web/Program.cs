@@ -18,9 +18,29 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default1",
+    pattern: "{* }",
+    defaults: new { controller = "Home", action = "Error" }
+    );
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
+var host = new WebHostBuilder()
+           .UseKestrel()
+           .UseContentRoot(Directory.GetCurrentDirectory())
+           .UseIISIntegration()
+           .Build();
+
+
 app.Run();
 
 

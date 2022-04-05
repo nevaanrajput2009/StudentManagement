@@ -3,9 +3,10 @@ using UI.Web.Helpers;
 
 namespace UI.Web.Controllers
 {
-    [UserAuthorizationActionFilter]
+  
     public class HomeController : Controller
     {
+
         public IActionResult Index()
         {
            
@@ -13,6 +14,18 @@ namespace UI.Web.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [Route("b/{id:bool}")]
+        public IActionResult About(bool id)
+        {
+            return View();
+        }
+
+        [Route("b/{id:decimal}")]
+        public IActionResult About(decimal id)
         {
             return View();
         }
