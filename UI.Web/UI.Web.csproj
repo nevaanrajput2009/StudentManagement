@@ -8,6 +8,14 @@
 
   <ItemGroup>
     <None Remove="Helpers\DBScript.sql" />
+    <None Remove="test.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="StaticFiles\test.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
