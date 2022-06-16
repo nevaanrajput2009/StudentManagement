@@ -1,5 +1,7 @@
 using BusinessManager;
 using BusinessManager.Interface;
+using Microsoft.Extensions.FileProviders;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigureServices(builder.Services);
@@ -15,6 +17,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseSession();
 app.UseHttpsRedirection();
+var contentRoot = builder.Configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
+StaticFileOptions staticFileOptions = new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(contentRoot, "StaticFiles")),
+    RequestPath = "/StaticFiles"
+};
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
@@ -50,4 +58,5 @@ static void ConfigureServices(IServiceCollection services)
     services.AddDistributedMemoryCache();
     services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(10));
     services.AddSingleton<IUserService, UserService>();
+    services.AddSingleton<IClassService, ClassService>();
 }
